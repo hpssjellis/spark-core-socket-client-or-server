@@ -9,14 +9,16 @@ void setup()
   server.begin();
 
   // Make sure your Serial Terminal app is closed before powering your Core
-  Serial.begin(9600);
+  // Serial.begin(9600);
   // Now open your Serial Terminal, and hit any key to continue!
-  while(!Serial.available()) SPARK_WLAN_Loop();
+  // while(!Serial.available())  SPARK_WLAN_Loop();
 
-  Serial.println(WiFi.localIP());
-  Serial.println(WiFi.subnetMask());
-  Serial.println(WiFi.gatewayIP());
-  Serial.println(WiFi.SSID());
+  //Serial.println(WiFi.localIP());
+  //Serial.println(WiFi.subnetMask());
+  //Serial.println(WiFi.gatewayIP());
+  //Serial.println(WiFi.SSID());
+  
+   SPARK_WLAN_Loop();   // so cloud stuff can still happen
 }
 
 void loop()
