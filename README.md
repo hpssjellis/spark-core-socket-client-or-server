@@ -2,21 +2,19 @@
 Attempt to test using the spark core or photon as a client or server for fast communication to light D7 LED
 
 
-For my failed kickstarter at https://www.kickstarter.com/projects/rocksetta/rover-the-shopping-drone I made an internet rover that could go anywhere, but the time lag using the psark cloud was between 300 ms and 1200 ms, which is great for environmental data but really bad for driving a vehicle. I would like to try out direct communication using websockets but the present examples are either really confusing (voodoospark) and hence not very useful for trying to make your own programms, or the examples simply do not work or sortoff work but the interface is not well explained. Voodoo spark is suppossed to easily work with telnet but I could not get it going.
+For my failed kickstarter at https://www.kickstarter.com/projects/rocksetta/rover-the-shopping-drone I made an internet rover that could go anywhere, but the time lag using the spark cloud was between 300 ms and 1200 ms, which is great for environmental data but really bad for driving a vehicle. I would like to try out direct communication using websockets but the present examples are either really confusing (voodoospark) and hence not very useful for trying to make your own programms, or the examples simply do not work or sort off work but the interface is not well explained. Voodoo spark is suppossed to easily work with telnet but I could not get it going.
 
 
 
-April 14. Lots of links to what other people have tried. The two basic issues are:
+April 14, 2015 First day: The two basic issues are:
 
 
 
-
-
-Spark core as a server and use a regular websocket to connect
+Spark core as a server and use a regular websocket html page to connect
 
 or
 
-Spark core as a client and use a node server with webbrowser interface (like a chat server) to connect
+Spark core as a client and use a node server with a webbrowser interface (like a chat server) to connect
 
 All I wish to do is send two strings to the spark core or photon
 
@@ -30,10 +28,10 @@ and
 D7-OFF
 
 
-Note: I do not wish to have any debug information in the code as the D7 LED is proof that it is working.
+Note: I do not wish to have any debug information in the code as the D7 LED on or off is proof that it is working.
 
 
-Other Links(which I can not seem to get working):
+Other Links (which I can not seem to get working):
 
 https://github.com/rwaldron/spark-io
 
