@@ -1,5 +1,9 @@
 TCPClient client;
 byte server[] = { 74, 125, 224, 72 }; // Google
+
+// found somewhere  IPAddress server(192, 168, 1, 122); instead of the above line
+
+
 void setup()
 {
   
