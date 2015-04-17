@@ -2,6 +2,12 @@ TCPClient client;
 byte server[] = { 74, 125, 224, 72 }; // Google
 
 // found somewhere  IPAddress server(192, 168, 1, 122); instead of the above line
+//IPAddress localAddr = Network.localIP();
+//Serial.print(localAddr);
+//Serial.print(" on ");
+//Serial.println(Network.SSID());
+//Serial.print("Pinging 5 times: ");
+//Serial.println(Network.ping(server));
 
 
 void setup()
