@@ -5,6 +5,14 @@ Attempt to test using the spark core or photon as a client or server for fast co
 For my failed kickstarter at https://www.kickstarter.com/projects/rocksetta/rover-the-shopping-drone I made an internet rover that could go anywhere, but the time lag using the spark cloud was between 300 ms and 1200 ms, which is great for environmental data but really bad for driving a vehicle. I would like to try out direct communication using websockets but the present examples are either really confusing (voodoospark) and hence not very useful for trying to make your own programms, or the examples simply do not work or sort off work but the interface is not well explained. Voodoo spark is suppossed to easily work with telnet but I could not get it going.
 
 
+April 22, 2015
+
+Solved it and without using AJAX or Websockets. I just send the command in a regular http://x.x.x.x/?D7-ON request. I use the spark server running port 80 for regular http. I then read eadch character and extract the first 30 characters and compare if they contain D7-ON , if so I light the D7 LED. The http request expects a webpage to be returned I just ignore it by sending the response to an iFrame.
+
+Flash the .ino file to your core and load the .html page either from a website, your own computer or make it into a phonegap App (not yet tested). when the page loads you have to enter your Core-ID and Access-token to get your IP from thecloud. Then you can enter that IP in the IP textbox and start activating Spark Core PINs. This is to quickly send information from the core, not to get information back from the core. That will have to be another project, or simply use the cloud service.
+
+
+
 
 April 14, 2015 First day: The two basic issues are:
 
