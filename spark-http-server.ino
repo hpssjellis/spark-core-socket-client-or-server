@@ -121,13 +121,17 @@ MAKE THIS HTML PAGE TO COMMUNICATE WITH YOUR CORE
 
 
 
+
 <a  target="myI" href="https://api.spark.io/v1/devices/{CORE-ID}/Address?access_token={ACCESS-TOKEN}" >Address</a><br>
 
 
-<a  target="myI" href="http://192.200.1.79?D7-ON" >D7-ON</a>...
-<a  target="myI" href="http://192.200.1.79?D7-OFF" >D7-OFF</a><br><br><br>
+<a  target="myI" href="http://192.145.1.65?D7-ON" >D7-ON</a>...
+<a  target="myI" href="http://192.145.1.65?D7-OFF" >D7-OFF</a><br><br><br>
 
 <iframe name="myI" width=500 height=400></iframe>
+
+
+
 
 
 
