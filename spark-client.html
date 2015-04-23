@@ -61,6 +61,7 @@ Get this from the settings area when logged into <a href="http://spark.io">http:
     document.all.iFrameID.style.visibility = 'hidden'
     document.all.myDeviceId.style.visibility = 'hidden'
     document.all.myIpAddress.style.visibility = 'hidden'
+    document.all.mySend.style.visibility = 'hidden'
 
 }">
 
@@ -73,12 +74,17 @@ Get this from the settings area when logged into <a href="http://spark.io">http:
     document.all.myIpAddress.style.visibility = 'visible'
 }">
 
+<input type="button" value="Show IP Only"  onClick="{
+    document.all.mySend.style.visibility = 'visible'
+}">
+
 
 <input type="button" value="Show Sensitive" style="background-color:lime" onClick="{
     document.all.myToken.style.visibility = 'visible'
     document.all.iFrameID.style.visibility = 'visible'
     document.all.myDeviceId.style.visibility = 'visible'
     document.all.myIpAddress.style.visibility = 'visible'
+    document.all.mySend.style.visibility = 'visible'
 }"><br><br><br>
 
 
@@ -91,14 +97,18 @@ Then click the buttons or mouse over the buttons and watch th D7 LED on your cor
 
 
 
-<input type=button value="Click: D7-ON"    onclick="document.getElementById('iFrameID').src=document.all.myIpAddress+'?D7-ON'"><br><br>
-<input type=button value="Click: D7-OFF"    onclick="document.getElementById('iFrameID').src=document.all.myIpAddress+'?D7-OFF'"><br><br><br><br>
+<input type=button value="Click: D7-ON"    onclick="{
+  document.getElementById('iFrameID').src='http://'+document.all.myIpAddress.value+'?D7-ON'
+  document.all.mySend.value='http://'+document.all.myIpAddress.value+'?D7-ON'
+}"><br><br>
+
+<input type=button value="Click: D7-OFF"    onclick="document.getElementById('iFrameID').src='http://'+document.all.myIpAddress.value+'?D7-OFF'"><br><br><br><br>
 
 
-<input type=button value="On Mouse Over: D7-ON" style="height:100px" onmouseover="document.getElementById('iFrameID').src=document.all.myIpAddress+'?D7-ON'">.....
-<input type=button value="On Mouse Over: D7-OFF" style="height:100px" onmouseover="document.getElementById('iFrameID').src=document.all.myIpAddress+'?D7-OFF'"><br><br><br><br>
+<input type=button value="On Mouse Over: D7-ON" style="height:100px" onmouseover="document.getElementById('iFrameID').src='http://'+document.all.myIpAddress.value+'?D7-ON'">.....
+<input type=button value="On Mouse Over: D7-OFF" style="height:100px" onmouseover="document.getElementById('iFrameID').src='http://'+document.all.myIpAddress.value+'?D7-OFF'"><br><br><br><br>
 
-
+<input type=text id="mySend" size=80><br>
 
 <iframe src="" name="myI" id="iFrameID" width=400 height=300></iframe>
 
