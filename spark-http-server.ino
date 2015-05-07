@@ -11,7 +11,7 @@ String myInStr;
 
 void setup()
 {
-    
+   myInStr.reserve(100);  //reserves 100 chars of String space 
    pinMode(D7, OUTPUT);
    digitalWrite(D7, HIGH); 
    
@@ -82,7 +82,7 @@ void loop() {
         // give the web browser time to receive the data
         delay(1);
     }
-    client.flush();
+    while(client.available()) char c=client.read();
     client.stop();
 }
 
