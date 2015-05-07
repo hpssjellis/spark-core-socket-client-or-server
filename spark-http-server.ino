@@ -83,6 +83,7 @@ void loop() {
         delay(1);
     }
     while(client.available()) char c=client.read();
+    // while(client.read() >= 0);    
     client.stop();
 }
 
