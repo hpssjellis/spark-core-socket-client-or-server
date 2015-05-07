@@ -14,19 +14,10 @@ void setup()
     
    pinMode(D7, OUTPUT);
    digitalWrite(D7, HIGH); 
-   delay(1000);
+   
+   delay(20000);                      // give 20 seconds to reflash the core if it gets unresponsive on startup
    digitalWrite(D7, LOW); 
-   delay(1000); 
-   digitalWrite(D7, HIGH); 
-   delay(1000);
-   digitalWrite(D7, LOW); 
-   delay(1000); 
-   delay(1000);
-   delay(1000);  // give a few seconds to reflash the core if it gets unresponsive on startup
-   digitalWrite(D7, HIGH); 
-   delay(300);
-   digitalWrite(D7, LOW); 
-    
+
     
   server.begin();
   IPAddress localIP = WiFi.localIP();
@@ -42,21 +33,17 @@ void loop() {
     client = server.available();
     if (client) {
 
-      
         myLoop1 = 0;
         myInput[0] = '\0';
 
         boolean currentLineIsBlank = true;
         while (client.connected()) {
             
-
             if (client.available()) {
 
-
-
-          
                 myIncoming = client.read();       // read from the http request
-               // client.write(myIncoming);         // great with Telnet to see what is going to the server              
+                client.write(myIncoming);         // great with Telnet to see what is going to the server       
+                
                if (myLoop1 < 29 ){                 // http request should be much longer than 29 characters!
                    myInput[myLoop1] = myIncoming; // put the character into an array
                    
@@ -70,21 +57,15 @@ void loop() {
                    if (myInStr.indexOf("D7-ON") >= 0){   digitalWrite(D7, HIGH); }  
                    if (myInStr.indexOf("D7-OFF") >= 0){  digitalWrite(D7, LOW); }  
                    
-
-                   
                    }
               
                  myLoop1++;
                 
-                       
-                       
                       
                 if (myIncoming == '\n' && currentLineIsBlank) {
 
-                   
-                    //client.println("<H1>Hello World.</h1>");   // use for debugging to check if http request can get returned
+                    client.println("<H1>Hello World.</h1>");   // use for debugging to check if http request can get returned
                     
-        
                     delay(1);
                     break;
                 }
