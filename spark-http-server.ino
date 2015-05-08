@@ -169,6 +169,20 @@ Accept-Encoding: gzip, deflate, sdch
 Accept-Language: en-US,en;q=0.8
 
 
+Hello Computer
+POST / HTTP/1.1
+Host: 192.145.1.65
+Connection: keep-alive
+Content-Length: 16
+User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2231.0 Safari/537.36
+Origin: null
+Content-type: application/x-www-form-urlencoded
+Accept: * / *
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.8
+
+myNamePost=D7-ON
+
 
 
 */
