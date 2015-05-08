@@ -5,6 +5,12 @@ Attempt to test using the spark core or photon as a client or server for fast co
 For my failed kickstarter at https://www.kickstarter.com/projects/rocksetta/rover-the-shopping-drone I made an internet rover that could go anywhere, but the time lag using the spark cloud was between 300 ms and 1200 ms, which is great for environmental data but really bad for driving a vehicle. I would like to try out direct communication using websockets but the present examples are either really confusing (voodoospark) and hence not very useful for trying to make your own programs, or the examples simply do not work or sort off work but the interface is not well explained. Voodoo spark is suppossed to easily work with telnet but I could not get it going.
 
 
+May 8, 2015
+Making another attempt. Found out that serial information from the spark core was killing the core, so will try not to use it. trying Ajax now. kind of getting it working but need to get the core to reply back to the AJAX for the ajax to close. Have some ideas
+
+
+
+
 April 22, 2015
 
 Solved it and without using AJAX or Websockets. I just send the command in a regular http://x.x.x.x/?D7-ON request. I use the spark server running port 80 for regular http. I then read each character and extract the first 30 characters and compare if they contain D7-ON , if so I light the D7 LED. The http request expects a webpage to be returned I just ignore it by sending the response to an iFrame.
