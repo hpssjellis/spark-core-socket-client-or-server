@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+<!--
+
+
+var loadingmessage = 'Processing...';
+
+
+
+
+function setAjax(){
+   var xmlHttp;
+   try{
+      xmlHttp=new XMLHttpRequest(); // Firefox, Opera 8.0+, Safari
+      return xmlHttp;
+   }
+   catch (e){
+      try{
+         xmlHttp=new ActiveXObject("Msxml2.XMLHTTP"); // Internet Explorer
+         return xmlHttp;
+      }
+      catch (e){
+         try{
+            xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+            return xmlHttp;
+         }
+         catch (e){
+            alert("Your browser does not support AJAX!");
+            return false;
+         }
+     }
+   }
+}
+
+
+
+function myAjax(f, url, myDivToChange) {
+   var poststr = getFormValues(f);
+    postData(url, poststr, myDivToChange);
+}
+
+
+
+function postData(url, parameters, myDivToChange2){
+   var xmlHttp = setAjax();
+
+   xmlHttp.onreadystatechange =  function(){
+      if(xmlHttp.readyState > 0 && xmlHttp.readyState < 4){
+          document.getElementById(myDivToChange2).innerHTML=loadingmessage;
+          
+      setTimeout(function(){ location.reload(); }, 60);
+
+      }
+      if (xmlHttp.readyState == 4) {
+
+
+             // this is where the magic occcurs
+
+         document.getElementById(myDivToChange2).innerHTML=xmlHttp.responseText+' data sent was '+parameters;
+         
+
+
+
+      }
+   }
+
+   xmlHttp.open("POST", url, true);
+   
+   xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   xmlHttp.send(parameters);
+}
+
+function getFormValues(fobj){
+   var str = "";
+   var valueArr = null;
+   var val = "";
+   var cmd = "";
+
+   for(var i = 0;i < fobj.elements.length;i++){
+      switch(fobj.elements[i].type){
+         case "text":
+            str += fobj.elements[i].name +"=" + escape(fobj.elements[i].value) + "&";
+            break;
+
+         case "textarea":
+            str += fobj.elements[i].name +"=" + escape(fobj.elements[i].value) + "&";
+            break;
+
+         case "select-one":
+             str += fobj.elements[i].name +"=" + fobj.elements[i].options[fobj.elements[i].selectedIndex].value + "&";
+             break;
+     }
+   }
+   str = str.substr(0,(str.length - 1));
+   return str;
+}
+
+//--></script>
+
+
+
+
+
+
+</head>
+
+<body onload="document.all.myForm.myName.select()">
+
+
+<form id="myForm">
+
+Type in the boxes to activate AJAX
+<input type="text" name="myNamePost" size="20" value="D7-ON" onKeyUp="">
+<input type="text" name="myOtherPost" size="20" value="hdsfghksdf" onKeyUp="">
+<input type="text" name="myBetterPost" size="20" value="jkasdfhasdf" onKeyUp="">
+
+
+<Input id="mySendNow" type=button value=send onclick="{myAjax(this.form, 'http://192.145.1.65', 'myDiv1')}">
+</form>
+
+
+<div id="myDiv1" style="color: blue;"></div>
+
+
+
+
+
+
+
+<a  target="myI" href="https://api.spark.io/v1/devices/{CORE-ID}/Address?access_token={ACCESS-TOKEN}" >Address</a><br>
+
+You need to first fill in the access token and Core ID. Then run it with your core flashing cyan. Then fill  in the Core IP address.
+Note: Do not put this on the web, as the Core ID would be available for others to see. It is fine from your computer.
+
+<a  target="myI" href="http://192.145.1.65?D7-ON" >D7-ON</a>...
+<a  target="myI" href="http://192.145.1.65?D7-OFF" >D7-OFF</a><br><br><br>
+
+
+
+GET /?D7-ON HTTP/1.1
+Host: 192.168.1.80
+
+
+
+
+
+
+
+
+
