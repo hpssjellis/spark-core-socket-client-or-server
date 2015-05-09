@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+<!--
+
+
+var loadingmessage = 'Processing...';
+
+
+
+
+function setAjax(){
+   var xmlHttp;
+   try{
+      xmlHttp=new XMLHttpRequest(); // Firefox, Opera 8.0+, Safari
+      return xmlHttp;
+   }
+   catch (e){
+      try{
+         xmlHttp=new ActiveXObject("Msxml2.XMLHTTP"); // Internet Explorer
+         return xmlHttp;
+      }
+      catch (e){
+         try{
+            xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+            return xmlHttp;
+         }
+         catch (e){
+            alert("Your browser does not support AJAX!");
+            return false;
+         }
+     }
+   }
+}
+
+
+
+function myAjax(f, url, myDivToChange) {
+   var poststr = getFormValues(f);
+    postData(url, poststr, myDivToChange);
+}
+
+
+
+function postData(url, parameters, myDivToChange2){
+   var xmlHttp = setAjax();
+
+
+   xmlHttp.onreadystatechange =  function(){
+      if(xmlHttp.readyState > 0 && xmlHttp.readyState < 4){
+          document.getElementById(myDivToChange2).innerHTML=loadingmessage;
+
+
+
+               setTimeout(function(){  xmlHttp.abort(); 
+                                       document.getElementById(myDivToChange2).innerHTML ='done' 
+                                     }, 20);
+               //setTimeout(function(){ location.reload(); }, 20);
+
+
+
+      }
+      if (xmlHttp.readyState == 4) {
+
+              
+             // this is where the magic occcurs
+
+         //document.getElementById(myDivToChange2).innerHTML=xmlHttp.responseText+' data sent was '+parameters;
+
+
+
+
+      }
+   }
+
+
+   xmlHttp.open("POST", url, true);
+   
+   xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   xmlHttp.send(parameters);
+}
+
+function getFormValues(fobj){
+   var str = "";
+   var valueArr = null;
+   var val = "";
+   var cmd = "";
+
+   for(var i = 0;i < fobj.elements.length;i++){
+      switch(fobj.elements[i].type){
+         case "text":
+            str += fobj.elements[i].name +"=" + escape(fobj.elements[i].value) + "&";
+            break;
+
+         case "textarea":
+            str += fobj.elements[i].name +"=" + escape(fobj.elements[i].value) + "&";
+            break;
+
+         case "select-one":
+             str += fobj.elements[i].name +"=" + fobj.elements[i].options[fobj.elements[i].selectedIndex].value + "&";
+             break;
+     }
+   }
+   str = str.substr(0,(str.length - 1));
+   return str;
+}
+
+//--></script>
+
+
+
+
+
+
+</head>
+
+<body onload="document.all.myForm.myName.select()">
+
+
+<form id="myForm1">
+
+Type in the boxes to activate AJAX
+<input type="text" name="myNamePost" size="20" value="D7-ON" onKeyUp="">
+<input type="text" name="myOtherPost" size="20" value="hdsfghksdf" onKeyUp="">
+<input type="text" name="myBetterPost" size="20" value="jkasdfhasdf" onKeyUp="">
+
+
+<Input id="mySendNow1" type=button value=send onClick="{myAjax(this.form, 'http://192.168.1.79', 'myDiv1')}">
+</form><br><br>
+
+
+
+
+<form id="myForm2">
+
+Type in the boxes to activate AJAX
+<input type="text" name="myNamePost" size="20" value="D7-OFF" onKeyUp="">
+<input type="text" name="myOtherPost" size="20" value="hdsfghksdf" onKeyUp="">
+<input type="text" name="myBetterPost" size="20" value="jkasdfhasdf" onKeyUp="">
+
+
+<Input id="mySendNow2" type=button value=send onclick="{myAjax(this.form, 'http://192.168.1.79', 'myDiv1')}">
+</form><br><br>
+<input type=button value=fast onclick="{
+
+   setTimeout(function(){    document.all.mySendNow1.click(); }, 1);
+   setTimeout(function(){    document.all.mySendNow2.click(); }, 500);
+   setTimeout(function(){    document.all.mySendNow1.click(); }, 1100);
+   setTimeout(function(){    document.all.mySendNow2.click(); }, 1700);
+   setTimeout(function(){    document.all.mySendNow1.click(); }, 2400);
+   setTimeout(function(){    document.all.mySendNow2.click(); }, 4000);
+
+}">
+
+<div id="myDiv1" style="color: blue;">here</div><br><br>
+
+
+
