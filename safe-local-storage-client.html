@@ -1,0 +1,182 @@
+<html>
+<head>
+
+<script>
+document.myHttpGet = "";
+</script>
+</head>
+
+<body onload="{
+   myStorage1 = localStorage.getItem('myStoredText1')
+   if(myStorage1  != null){
+      document.all.myToken.style.visibility = 'hidden'  // hide sensitive data. remove these if irritating
+      document.all.myDeviceId.style.visibility = 'hidden'      
+      document.getElementById('myToken').value = myStorage1 
+    }
+    
+    myStorage2 = localStorage.getItem('myStoredText2')
+    if(myStorage2  != null){
+       document.getElementById('myDeviceId').value = myStorage2      
+    }
+    myStorage3 = localStorage.getItem('myStoredText3')
+    if(myStorage3  != null){
+       document.getElementById('myIpAddress').value = myStorage3     
+    }
+    document.myHttpGet = 'https://api.spark.io/v1/devices/'+myStorage2+'/Address?access_token='+myStorage1
+}">
+
+  
+
+
+
+Type in the boxes then click submit to activate your Spark Core or Photon.<br><br>
+
+
+Device Core ID:<input id="myDeviceId" name="myCoreID" type=text size=50 placeholder="78dd12345678123456"> 
+Get this from the core area when logged in<br>
+
+
+
+Access Token : <input id="myToken" name="access_token" type=text size=50 placeholder="5622ce6bba702ef6bd3456d5ed26aaa4a28d7c9"> 
+Get this from the settings area when logged into <a href="http://spark.io">http://spark.io</a><br><br>
+
+
+
+
+
+<input type="button" value="Store Spark Token and ID locally!" onClick="{
+   localStorage.setItem('myStoredText1', document.all.myToken.value)   
+   localStorage.setItem('myStoredText2', document.all.myDeviceId.value)  
+   localStorage.setItem('myStoredText3', document.all.myIpAddress.value)  
+   alert('Access_Token='+ document.all.myToken.value + ' \nCore_ID=' +document.all.myDeviceId.value + ' \nIP='+ document.all.myIpAddress.value + ' \nHas been stored')
+}">
+
+
+<input type="button" value="Hide Sensitive"  onClick="{
+    document.all.myToken.style.visibility = 'hidden'
+    document.all.iFrameID.style.visibility = 'hidden'
+    document.all.myDeviceId.style.visibility = 'hidden'
+    document.all.myIpAddress.style.visibility = 'hidden'
+    document.all.mySend.style.visibility = 'hidden'
+}">
+
+
+<input type="button" value="Show iFrame Only"  onClick="{
+    document.all.iFrameID.style.visibility = 'visible'
+}">
+
+<input type="button" value="Show IP Only"  onClick="{
+    document.all.myIpAddress.style.visibility = 'visible'
+}">
+
+<input type="button" value="Show Send Only"  onClick="{
+    document.all.mySend.style.visibility = 'visible'
+}">
+
+
+<input type="button" value="Show Sensitive" style="background-color:lime" onClick="{
+    document.all.myToken.style.visibility = 'visible'
+    document.all.iFrameID.style.visibility = 'visible'
+    document.all.myDeviceId.style.visibility = 'visible'
+    document.all.myIpAddress.style.visibility = 'visible'
+    document.all.mySend.style.visibility = 'visible'
+}"><br><br><br>
+
+
+Click this first
+<input type=button value="Get IP Address"   onclick="document.getElementById('iFrameID').src=document.myHttpGet">
+
+Enter the value of your Spark Cores IP Address here:<input type=text id="myIpAddress" size=16 placeholder="200.34.35.1"> Port = 80<br><br>
+Then click the buttons or mouse over the buttons and watch th D7 LED on your core<br><br>
+
+For simple weblinks to work you would have to change the following code to use the IP determined by clicking the button above<br>
+
+
+<a target="myI" href="http://200.34.35.1?D7-ON">D7-ON</a>.....<a target="myI" href="http://200.34.35.1?D7-OFF">D7-OFF</a><br>
+
+
+
+Some better Javascript buttons demonstrated below.<br><br><br>
+Easiest<br>
+<input id="myOn" type=button value="Click: D7-ON"    onclick="{
+  document.getElementById('iFrameID').src='http://'+document.all.myIpAddress.value+'?D7-ON'
+}"><br><br>
+
+<input id="myOff" type=button value="Click: D7-OFF"    onclick="{
+  document.getElementById('iFrameID').src='http://'+document.all.myIpAddress.value+'?D7-OFF'
+}"><br><br>
+
+
+
+Better<br>
+<input type=button value="Click: D7-ON"    onclick="{
+  document.getElementById('iFrameID').src='http://'+document.all.myIpAddress.value+'?D7-ON'
+  document.all.mySend.value='http://'+document.all.myIpAddress.value+'?D7-ON'
+  setTimeout(function(){ document.getElementById('iFrameID').src = 'generic.html' }, 17); 
+}"><br><br>
+
+<input type=button value="Click: D7-OFF"    onclick="
+  document.getElementById('iFrameID').src='http://'+document.all.myIpAddress.value+'?D7-OFF'
+  document.all.mySend.value='http://'+document.all.myIpAddress.value+'?D7-OFF'
+  setTimeout(function(){ document.getElementById('iFrameID').src = 'generic.html' }, 17); 
+"><br><br><br><br>
+
+
+<input type=button value="On Mouse Over: D7-ON" style="height:100px" onmouseover="{
+  document.getElementById('iFrameID').src='http://'+document.all.myIpAddress.value+'?D7-ON'
+  document.all.mySend.value='http://'+document.all.myIpAddress.value+'?D7-ON'
+    setTimeout(function(){ document.getElementById('iFrameID').src = 'generic.html' }, 17); 
+}">.....
+<input type=button value="On Mouse Over: D7-OFF" style="height:100px" onmouseover="{
+  document.getElementById('iFrameID').src='http://'+document.all.myIpAddress.value+'?D7-OFF'
+  document.all.mySend.value='http://'+document.all.myIpAddress.value+'?D7-OFF'
+  setTimeout(function(){ document.getElementById('iFrameID').src = 'generic.html' }, 17); 
+}"><br><br><br><br>
+
+<input type=text id="mySend" size=80><br>
+
+<iframe src="" name="myI" id="iFrameID" width=400 height=300></iframe><br><br>
+
+
+
+
+
+
+
+Enter a delay<input type=text id="myDelay" size=20 value=100>  milliseconds per command<br>  
+Timer result <input type=text id="myWaitOut" size=70 > Watch that 10 flashes actually occur. <br>
+Lower the ms until only a few flashes occur or the LED does not turn off!<br>
+On my network I consistently can get 60 ms per command.<br>
+
+<input type=button value="20 Commands Sent Fast" onclick="{
+   var mytestInterval = document.all.myDelay.value*1    
+   var myTimer1 = new Date().getMilliseconds();;  
+
+   setTimeout(function(){ document.all.myOn.click() }, mytestInterval*1); 
+   setTimeout(function(){ document.all.myOff.click()}, mytestInterval*2); 
+   setTimeout(function(){ document.all.myOn.click() }, mytestInterval*3);
+   setTimeout(function(){ document.all.myOff.click()}, mytestInterval*4);
+   setTimeout(function(){ document.all.myOn.click() }, mytestInterval*5);
+   setTimeout(function(){ document.all.myOff.click()}, mytestInterval*6);
+   setTimeout(function(){ document.all.myOn.click() }, mytestInterval*7);
+   setTimeout(function(){ document.all.myOff.click()}, mytestInterval*8);
+   setTimeout(function(){ document.all.myOn.click() }, mytestInterval*9);
+   setTimeout(function(){ document.all.myOff.click()}, mytestInterval*10);
+   setTimeout(function(){ document.all.myOn.click() }, mytestInterval*11);
+   setTimeout(function(){ document.all.myOff.click()}, mytestInterval*12);
+   setTimeout(function(){ document.all.myOn.click() }, mytestInterval*13);
+   setTimeout(function(){ document.all.myOff.click()}, mytestInterval*14);
+   setTimeout(function(){ document.all.myOn.click() }, mytestInterval*15);
+   setTimeout(function(){ document.all.myOff.click()}, mytestInterval*16);
+   setTimeout(function(){ document.all.myOn.click() }, mytestInterval*17);
+   setTimeout(function(){ document.all.myOff.click()}, mytestInterval*18);
+   setTimeout(function(){ document.all.myOn.click() }, mytestInterval*19);
+   setTimeout(function(){ document.all.myOff.click()}, mytestInterval*20);
+
+   setTimeout(function(){ document.getElementById('iFrameID').src = 'generic.html' }, mytestInterval*21); 
+   myElapsed = document.all.myDelay.value*20
+   document.all.myWaitOut.value = myElapsed+ ' milliseconds for 20 Core Commands = '+myElapsed/20 +' ms per command'
+
+}"><br>
+
+
