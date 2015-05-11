@@ -1,5 +1,5 @@
 
-
+// By Jeremy Ellis twitter @rocksetta or http://www.rocksetta.com
 TCPServer server = TCPServer(80);
 TCPClient client;
 
@@ -8,222 +8,110 @@ char   myInput[30];
 char   myIncoming;
 int    myLoop1;
 String myInStr;
-String  myPost = "HTTP/1.1 200 OK/nContent-Type: text/xml; charset=utf-8/nContent-Length: 8/n/ndone-now/n/n";
-int    myLength = 89;
-
 
 void setup()
 {
-   myInStr.reserve(40);  //reserves 40 chars of String space 
+   myInStr.reserve(30);  //reserves 30 chars of String space 
+   pinMode(D7, OUTPUT);
+
+   IPAddress localIP = WiFi.localIP();
+   sprintf(addr, "%u.%u.%u.%u", localIP[0], localIP[1], localIP[2], localIP[3]);
+   Spark.variable("Address", addr, STRING);
+   
+   // call this from a web page using
+   //<a  target="myI" href="https://api.spark.io/v1/devices/{CORE-ID}/Address?access_token={ACCESS-TOKEN}" >Address</a><br>
+   // or from you browser using
+   //https://api.spark.io/v1/devices/{CORE-ID}/Address?access_token={ACCESS-TOKEN}
+   
+
    pinMode(D7, OUTPUT);
    digitalWrite(D7, HIGH); 
-   delay(1000);
-   digitalWrite(D7, LOW); 
-   delay(1000); 
-   digitalWrite(D7, HIGH); 
-   delay(1000);
-   digitalWrite(D7, LOW); 
-   delay(1000); 
-   delay(1000);
-   delay(1000);  // give a few seconds to reflash the core if it gets unresponsive on startup
-   digitalWrite(D7, HIGH); 
-   delay(300);
+   delay(15000);                 // a little bit of time to re-flash core, check cloud etc.
    digitalWrite(D7, LOW); 
     
-    
-  server.begin();
-  IPAddress localIP = WiFi.localIP();
-  sprintf(addr, "%u.%u.%u.%u", localIP[0], localIP[1], localIP[2], localIP[3]);
-  Spark.variable("Address", addr, STRING);
-  Spark.variable("myIn",  myInput, STRING);  
-  Spark.variable("myLoop1", &myLoop1, INT);
+   server.begin();
+
 }
 
-
 void loop() {
-    // listen for incoming clients
-    client = server.available();
-    if (client) {
-
-      
+   if (client.connected()) {     
         myLoop1 = 0;
         myInput[0] = '\0';
 
-        bool currentLineIsBlank = true;
-        bool secondTime = false;
-        while (client.connected()) {
-            
-
-            if (client.available()) {
-
-
-
-          
-                myIncoming = client.read();       // read from the http request
-
-               if (myLoop1 < 29 && secondTime){                 // wait for the blank line then start counting characters
-                                                                // must send a few extra form elements in the POST
-                   myInput[myLoop1] = myIncoming; // put the character into an array
-                   myLoop1++;
-                   
-                } else {                           // read enough information from the http request
+        while (client.available()) {
+            myIncoming = client.read();         // read from the http request
+            if (myLoop1 < 29 ){                 // http request should be much longer than 29 characters!
+                myInput[myLoop1] = myIncoming;  // put the character into an array
+                } else {                        // have read enough information from the http request
                
-                    myInput[myLoop1] = '\0';      // helps make a char array compatible with a string.
-      
+                    myInput[myLoop1] = '\0';    // helps make a char array compatible with a string.
                     myInStr = myInput;
                     myInStr.toUpperCase();
                           
-                   if (myInStr.indexOf("D7-ON") >= 0){   digitalWrite(D7, HIGH); }  
-                   if (myInStr.indexOf("D7-OFF") >= 0){  digitalWrite(D7, LOW); }  
+                    if (myInStr.indexOf("D7-ON")  >= 0){ digitalWrite(D7, HIGH); }  
+                    if (myInStr.indexOf("D7-OFF") >= 0){ digitalWrite(D7, LOW);  }  
+                    if (myInStr.indexOf("DARK")   >= 0){ RGB.brightness(1);      }  
+                    if (myInStr.indexOf("BRIGHT") >= 0){ RGB.brightness(250);    }  
                    
-                   //delay(3);
-                   // server.print(myPost);   
-                    // server.write(myPost, myLength);  
-                    // delay(10);
-                    // break;
-                         // now  send reply back to AJAX
-                    //delay(50);     
-                         
-                   // server.write('D');    
-                    //delay(50);
-                   // break;
-                   // delay(3);
-                    
-   
+                    while(client.read() >= 0);    // ignore the rest of the http request
+                    client.stop();                // shut down the client for next connection
                    }
-              
-
-                
-                       
-                       
-                      
-                if (myIncoming == '\n' && currentLineIsBlank) {
-                    
-                    
-                    if (secondTime){
-                     
-                     
-           
-                      // server.print(myPost);   
-                    //delay(1);
-                  //  server.write("Content-Type: text/xml; charset=utf-8/n");  
-                    //delay(1);
-                 //   server.write("Content-Length: 8/n");    
-                    //delay(1);
-                 //   server.write("/n");      
-                   // delay(1);
-                  //  server.write("done-now/n");    
-                   // delay(1);
-                    
-                     
-                     
-                     
-                     
-                       // delay(10);
-                        break;  // really needed !!!
-                    }
-                    
-                   secondTime = true;
-                   
-                  
-                    
-        
-
-                }
-                if (myIncoming == '\n') {          // you're starting a new line
-                    currentLineIsBlank = true;
-                }
-                else if (myIncoming != '\r') {     // you've gotten a character on the current line
-                    currentLineIsBlank = false;
-                }
-                
-
-            }  // end while available
-            
-            
-            
-        }   // end wile connected
-        // give the web browser time to receive the data
-       // delay(10);
-    }
-   // client.flush();
-    while(client.read() >= 0);
-    client.stop();
-}
-
-
-
-
-
-
+                 myLoop1++;
+        }  
+    } else {     
+        client = server.available();        // if no client is yet connected, check for a new connection
+      }
+}   
 
 
 
 
 /*
 
-MAKE THIS HTML PAGE TO COMMUNICATE WITH YOUR CORE
+--Cut this into a web page only for your computer. Use the localStorage webpage for anything on the actual web.
+What is really cool is that you can call this line directly from your browser to check something on your Spark Core or Photon
+
+http://192.168.1.2?D7-ON
 
 
 
+
+
+So your web page simply needs, to find your IP using <br>
 
 <a  target="myI" href="https://api.spark.io/v1/devices/{CORE-ID}/Address?access_token={ACCESS-TOKEN}" >Address</a><br>
 
 
-<a  target="myI" href="http://192.145.1.65?D7-ON" >D7-ON</a>...
-<a  target="myI" href="http://192.145.1.65?D7-OFF" >D7-OFF</a><br><br><br>
 
-<iframe name="myI" width=500 height=400></iframe>
+And change the IP in the following javascript<br>
 
+<a id="myOn" target="myI" href="http://192.168.1.2?D7-ON" >D7-ON</a>...
+<a id="myOff" target="myI" href="http://192.168.1.2?D7-OFF" >D7-OFF</a>...<br>
 
-
-
-
+<iframe id="myIframe" name="myI" width=200 height=100></iframe>
 
 
 
 
 
+For a bit fancier<br>
+<input id="myOn2" type=button value="D7-ON-2" onclick="{
+   document.getElementById('myIframe').src = 'http://192.168.1.2?D7-ON'
+   setTimeout(function(){ document.getElementById('myIframe').src = 'generic.html' }, 17); 
 
+}"><br>
 
+<input id="myOff2" type=button value="D7-Off-2" onclick="{
+    document.getElementById('myIframe').src = 'http://192.168.1.2?D7-OFF'
+    setTimeout(function(){ document.getElementById('myIframe').src = 'generic.html' }, 17); 
+}"><br><br>
 
-
-
-
-
-
-The serial printout looks like
-
-192.145.1.65
-GET /?D7-ON HTTP/1.1
-Host: 192.145.1.65
-Connection: keep-alive
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,* / *;q=0.8
-User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2231.0 Safari/537.36
-Accept-Encoding: gzip, deflate, sdch
-Accept-Language: en-US,en;q=0.8
-
-
-
-
-
-
-
-
-Possible response
-
-HTTP/1.1 200 OK
-Content-Type: text/xml; charset=utf-8
-Content-Length: 8
-
-done-now
-
-
-
-
-
-
-
+Note: you need to make a simple web page called generic.html for the above to work.
 
 */
+
+
+
+
+
 
