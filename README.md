@@ -12,6 +12,10 @@ Trying a nodejs server with a test .ino but I am still far away from this one wo
 
 https://github.com/GianlucaGuarini/nodejs-arduino-example
 
+or
+
+https://github.com/hpssjellis/digitalfoosball
+
 
 
 May 8, 2015
