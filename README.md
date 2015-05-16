@@ -5,6 +5,15 @@ Attempt to test using the spark core or photon as a client or server for fast co
 For my failed kickstarter at https://www.kickstarter.com/projects/rocksetta/rover-the-shopping-drone I made an internet rover that could go anywhere, but the time lag using the spark cloud was between 300 ms and 1200 ms, which is great for environmental data but really bad for driving a vehicle. I would like to try out direct communication using websockets but the present examples are either really confusing (voodoospark) and hence not very useful for trying to make your own programs, or the examples simply do not work or sort off work but the interface is not well explained. Voodoo spark is suppossed to easily work with telnet but I could not get it going.
 
 
+
+May 16th, 2015
+
+Trying a nodejs server with a test .ino but I am still far away from this one working. Some good node ideas but USB tethered here
+
+https://github.com/GianlucaGuarini/nodejs-arduino-example
+
+
+
 May 8, 2015
 Making another attempt. Found out that serial information from the spark core was killing the core, so will try not to use it. trying Ajax now. kind of getting it working but need to get the core to reply back to the AJAX for the ajax to close. Have some ideas
 
