@@ -6,6 +6,16 @@ For my failed kickstarter at https://www.kickstarter.com/projects/rocksetta/rove
 
 
 
+May 21st, 2015
+
+Might be getting sockets working with the spark core. Have started a new github at
+
+https://github.com/hpssjellis/node-ws-test
+
+
+
+
+
 May 16th, 2015
 
 Trying a nodejs server with a test .ino but I am still far away from this one working. Some good node ideas but USB tethered here
