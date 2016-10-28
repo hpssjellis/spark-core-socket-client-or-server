@@ -2,6 +2,19 @@
 Attempt to test using the spark core or photon as a client or server for fast communication to light D7 LED
 
 
+Oct 2016
+
+By the way a much better attempt is at 
+
+https://github.com/hpssjellis/Particle-Spark-Core-Photon-Websocket-Hack
+
+
+.
+.
+.
+.
+
+
 For my failed kickstarter at https://www.kickstarter.com/projects/rocksetta/rover-the-shopping-drone I made an internet rover that could go anywhere, but the time lag using the spark cloud was between 300 ms and 1200 ms, which is great for environmental data but really bad for driving a vehicle. I would like to try out direct communication using websockets but the present examples are either really confusing (voodoospark) and hence not very useful for trying to make your own programs, or the examples simply do not work or sort off work but the interface is not well explained. Voodoo spark is suppossed to easily work with telnet but I could not get it going.
 
 
